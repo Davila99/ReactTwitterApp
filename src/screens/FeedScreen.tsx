@@ -10,7 +10,6 @@ const FeedScreen = ({navigation,route}) => {
         <Button
           title="Go to Details... again"
           onPress={() => navigation.push('FeedScreen')}
-          
         />
   
         {/* <Button title="Go back" onPress={() => navigation.goBack()} /> */}
