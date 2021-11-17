@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
-import { View, Text, Button } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet } from "react-native";
 
-const [tweets, settweetsData] = useState([])
+
 
 const HomeScreen = ({ navigation }) => {
+
+    const [tweetsData, setTweetsData] = useState([])
+
+    
+    const getTweets = async  () => {
+
+        const resp = await fetch('https://jsonplaceholder.typicode.com/users')
+        
+        const data = await resp.json()
+
+        setTweetsData(data)
+
+    }
+
+  
+    useEffect(() => {
+        getTweets()
+    }, [])
+
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
+            <Text style={{ fontSize: 30 }}>Home Screen</Text>
             {
                 tweetsData.map(tweet => (
-                    <Text key={tweet.id}>{tweet.tweet_text}</Text>
+                    <Text key={tweet.id}>{tweet.website}</Text>
                 ))
             }
-            {/* <Button
-          title="Go to Details"
-          onPress={() => navigation.navigate('FeedScreen', {
-            id: 21,
-            name: 'Es la edad de Eliseo',
-          })}
-        /> */}
-
         </View>
     );
 }
