@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={{ fontSize: 30 }}>Home Screen</Text>
             {
                 tweetsData.map(tweet => (
-                    <Text key={tweet.id}>{tweet.website}</Text>
+                    <Text key={tweet.id}>{tweet.name}</Text>
                 ))
             }
         </View>
