@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from "react-native";
 
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { MainStackParamList } from '../navigators/MainStackNavigator';
 
 
+type Props = NativeStackScreenProps<MainStackParamList, 'HomeScreen'>;
+interface Tweet{
+    id:number,
+    user_id:number,
+    tweet_text:string,
+    tweet_date:string
+}
+const HomeScreen = ({ navigation }:Props) => {
 
-const HomeScreen = ({ navigation }) => {
+    const [tweetsData, setTweetsData] = useState<Tweet[]>([])
 
-    const [tweetsData, setTweetsData] = useState([])
 
 
     const getTweets = async () => {
@@ -19,9 +28,8 @@ const HomeScreen = ({ navigation }) => {
         setTweetsData(data.data)
 
 
-
     }
-   
+
 
     useEffect(() => {
         getTweets()
@@ -33,18 +41,22 @@ const HomeScreen = ({ navigation }) => {
             <Text style={{ fontSize: 30 }}>Home Screen</Text>
             {
                 tweetsData.map(tweet => (
-                    <Text key={tweet.id}>{tweet.tweet_text}</Text>
+                    <View key={tweet.id}>
+                        <Text   >{tweet.tweet_text}</Text>
+                        <Button
+                            title="Detalles"
+                            onPress={() => navigation.navigate('TweetDetailScreen', {
+                                id: tweet.id,
+                                tweet_text: tweet.tweet_text,
+                            })
+                            }
+                        />
+                    </View>
+
 
                 ))
             }
 
-            <Button
-                title="ir a FeedScreen"
-                onPress={() => navigation.navigate('FeedScreen', {
-                    itemId: 89,
-                    otherParam: 'anything you want here',
-                })}
-            />
 
         </View>
     );
